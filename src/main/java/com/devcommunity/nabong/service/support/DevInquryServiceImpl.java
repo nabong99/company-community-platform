@@ -1,5 +1,6 @@
 package com.devcommunity.nabong.service.support;
 
+import com.devcommunity.nabong.model.vo.support.DevGuideVO;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -8,8 +9,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.devcommunity.nabong.mapper.support.DevInquryMapper;
 import com.devcommunity.nabong.model.vo.support.DevInquryVO;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * 개발자 Q&A 관련 비즈니스 Logic 구현체
@@ -72,12 +75,13 @@ import java.util.List;
     // TODO - 상세 조회 시 VO에 Data를 받으므로, 불필요한 Data가 전달 될 수 있으며, 게시글의 일련번호만 받게 Refactoring 예정
 
     @Override
-    public DevInquryVO devInquryDetail(DevInquryVO devInquryVO) {
+    public Map<String, DevInquryVO> devInquryDetail(Integer inqurySn) {
 
-        log.info("DevInquryService를 구현한 DevInquryServiceImpl의 devInquryDetail(DevInquryVO devInquryVO)가 호출 되었습니다!");
-        log.info("devInquryMapper.devInquryDetail(devInquryVO)를 호출 하겠습니다!");
+        Map<String, DevInquryVO> result = new HashMap<>();
+        //sn값을 통해 상세조회
+        result.put("vo", devInquryMapper.devInquryDetail(inqurySn));
 
-        return devInquryMapper.devInquryDetail(devInquryVO);
+        return result;
     } // devInquryDetail(DevInquryVO devInquryVO) 끝
 
 

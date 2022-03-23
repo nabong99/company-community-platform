@@ -58,7 +58,7 @@
 
 
     <!-- Q&A 상세 조회 -->
-    <select id="devInquryDetail" parameterType="com.devcommunity.nabong.model.vo.support.DevInquryVO" resultType="com.devcommunity.nabong.model.vo.support.DevInquryVO">
+    <select id="devInquryDetail" parameterType="Integer" resultType="com.devcommunity.nabong.model.vo.support.DevInquryVO">
         select X.* from (select i.INQRY_SN , i.INQRY_USER_SN , i.FILE_SN , i.INQRY_CN , i.INQRY_SJ , i.SECRET_AT , i.ANSWER_AT , i.ANSWER_CN , u1.USER_ID as ANSWER_USER_ID , DATE_FORMAT(i.ANSWER_DT, '%Y-%m-%d') AS ANSWER_DT , DATE_FORMAT(i.CREAT_DT, '%Y-%m-%d') AS CREAT_DT , i.UPDT_DT , i.UPDUSR_SN, u.USER_ID
         , COALESCE(LAG(i.INQRY_SN) OVER(ORDER BY i.INQRY_SN), -1) AS BEFORE_INQRY_SN
         , LAG(i.INQRY_SJ) OVER(ORDER BY i.INQRY_SN) AS BEFORE_INQRY_SJ

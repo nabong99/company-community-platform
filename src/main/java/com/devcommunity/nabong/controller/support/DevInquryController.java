@@ -1,5 +1,6 @@
 package com.devcommunity.nabong.controller.support;
 
+import com.devcommunity.nabong.model.vo.support.DevGuideVO;
 import io.swagger.annotations.*;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -25,16 +26,9 @@ import java.util.Map;
     private DevInquryService devInquryService;
 
     @Autowired public DevInquryController(DevInquryService devInquryService) {
-
-        log.info("DevInquryController의 생성자 DevInquryController(DevInquryService devInquryService, FileService fileService)가 호출 되었습니다!");
-
         this.devInquryService = devInquryService;
 
     } // DevInquryController(DevInquryService devInquryService, FileService fileService) 끝
-
-    @ApiOperation(value = SwaggerApiInfo.WRITE_UPDATE_POSTS, notes = "Q&A 게시글 등록 / 수정 서비스 입니다.")
-    @ApiParam(name = "devInquryVO", value = "등록 / 수정 시 입력 되어야 할 내용 객체 입니다.", readOnly = true)
-    @ApiResponses(value = { @ApiResponse(code=200, message = "1.등록 성공 \n 2.등록 실패")})
 
     /**
      * 게시글 등록 / 수정 서비스
@@ -47,20 +41,13 @@ import java.util.Map;
 
     @ResponseBody @PostMapping("/devInqury")
     public Object devInquryRegist(@RequestBody DevInquryVO devInquryVO, HttpServletRequest request) throws Exception {
-
-        log.info("devInquryRegist(@RequestBody DevInquryVO devInquryVO, HttpServletRequest request)가 호출 되었습니다!");
-        log.info("Client에서 넘어온 Data Value를 먼저 확인 하기 위해 배열 변수에 값을 넣겠습니다!");
-
         Field[] fields = devInquryVO.getClass().getDeclaredFields();
 
-        log.info("반복문을 통해 배열에 들어 간 Data를 하나씩 꺼내 확인 해 보겠습니다!");
         for (Field field : fields) {
 
             /** 참고 자료
              * @see "https://tyboss.tistory.com/entry/Java-%EC%9E%90%EB%B0%94-%EB%A6%AC%ED%94%8C%EB%A0%89%EC%85%98-reflection-setAccessible"
              */
-
-            log.info("Java 리플렉션 기법 중 setAccessible(true) 통해 Field 객체 자료형 Type field의 접근제어 지시자에 의한 제어를 변경 하겠습니다!");
             field.setAccessible(true);
 
             System.err.println(field.getName() + " : " + field.get(devInquryVO));
@@ -142,74 +129,35 @@ import java.util.Map;
      * @return Object - 서버 처리 여부에 해당하는 Status Code 및 Data 반환을 위한 객체
      * @see ""
      */
-
-    // TODO - 목록 조회 시 VO에 Data를 받으므로, 불필요한 Data가 전달 될 수 있으며, 검색이 함께 이뤄지는 Logic으로 분리 및 Refactoring 예정
-
     @ResponseBody
     @GetMapping("/devInquryList")
-    public Object devInquryList( DevInquryVO devInquryVO) throws Exception {
-
-        log.info("DevInquryController의 devInquryList(@RequestBody DevInquryVO devInquryVO)가 호출 되었습니다!");
+    public Object devInquryList(DevInquryVO devInquryVO) throws Exception {
 
         Map<String, Object> result = new HashMap<>();
 
-        log.info("개발자 문의 게시글 목록을 가져오기 위해 devInquryService.devInquryList(devInquryVO)를 호출 하겠습니다!");
         List<HashMap<String, Object>> devInquryList = devInquryService.devInquryList(devInquryVO);
-
-        log.info("개발자 문의 게시글 목록을 Count하기 위해 devInquryService.devInquryListCnt(devInquryVO)를 호출 하겠습니다!");
         int devInquryListCnt = devInquryService.devInquryReadhitCount(devInquryVO);
 
-        log.info("각 Service에서 조회된 결과값을 result Map에 담아 반환 하겠습니다!");
         result.put("devInquryList", devInquryList);
         result.put("devInquryListCnt", devInquryListCnt);
 
         return result;
-
     } // devInquryList(@RequestBody DevInquryVO devInquryVO) 끝
 
     @ApiOperation(value = SwaggerApiInfo.GET_POSTS_ONE_THING, notes = "Q&A 상세 조회 서비스 입니다.")
     @ApiParam(name = "devInquryVO", value = "조회 시 입력 되어야 할 내용 객체 입니다.", readOnly = true)
     @ApiResponses(value = { @ApiResponse(code=200, message = "1.조회 성공 \n 2.조회 실패")})
-
     /**
      * 상세 조회 서비스
      * @param devInquryVO - 회원 가입을 위한 이용자 입력값을 담은 DTO
      * @return Object - 서버 처리 여부에 해당하는 Status Code 및 Data 반환을 위한 객체
      * @see ""
      */
-
-    @ResponseBody @GetMapping("/devInqury")
-    public Object devInquryDetail (@RequestBody DevInquryVO devInquryVO) throws Exception {
-
-        log.info("DevInquryController의 devInquryDetail (@RequestBody DevInquryVO devInquryVO)가 호출 되었습니다!");
-        log.info("Client에서 넘어온 Data Value를 먼저 확인 하기 위해 배열 변수에 값을 넣겠습니다!");
-
-        Field[] fields = devInquryVO.getClass().getDeclaredFields();
-
-        log.info("반복문을 통해 배열에 들어 간 Data를 하나씩 꺼내 확인 해 보겠습니다!");
-        for (int i = 0; i < fields.length; i++) {
-
-            /** 참고 자료
-             * @see "https://tyboss.tistory.com/entry/Java-%EC%9E%90%EB%B0%94-%EB%A6%AC%ED%94%8C%EB%A0%89%EC%85%98-reflection-setAccessible"
-             */
-
-            log.info("Java 리플렉션 기법 중 setAccessible(true) 통해 Field 배열 fields의 접근제어 지시자에 의한 제어를 변경 하겠습니다!");
-            fields[i].setAccessible(true);
-
-            System.err.println(fields[i].getName() + " : " + fields[i].get(devInquryVO));
-
-        } // for (int i = 0; i < fields.length; i++) 끝
-
-        Map<String, Object> result = new HashMap<>();
-
-        log.info("devInquryService.devInquryDetail(devInquryVO)를 호출하여 비즈니스 로직 처리를 하겠습니다!");
-        DevInquryVO valueObject = devInquryService.devInquryDetail(devInquryVO);
-
-        log.info("devInquryService.devInquryDetail(devInquryVO) 반환값을 result Map에 담겠습니다!");
-        result.put("devInquryVO", valueObject);
-
-        log.info("result Map을 반환 하겠습니다!");
-        return result;
+    @ResponseBody
+    @GetMapping("/devInqury/{inqueySn}")
+    public Map<String, DevInquryVO> devInquryDetail (@PathVariable Integer inqueySn) throws Exception {
+        System.out.println("check>>>>>>1"+devInquryService.devInquryDetail(inqueySn));
+        return devInquryService.devInquryDetail(inqueySn);
 
     } // devInquryDetail (@RequestBody DevInquryVO devInquryVO) 끝
 

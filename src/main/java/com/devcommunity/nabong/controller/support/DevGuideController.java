@@ -84,8 +84,8 @@ import java.util.Map;
     @ResponseBody
     @GetMapping("/devGuide/{devlopGuideSn}")
     public Map<String, DevGuideVO> devGuideView(@PathVariable Integer devlopGuideSn) throws Exception{
-    	
-    	return devGuideService.devGuideListView(devlopGuideSn);
+        System.out.println("check>>>>>>222"+devGuideService.devGuideListView(devlopGuideSn));
+        return devGuideService.devGuideListView(devlopGuideSn);
     	
     }
 

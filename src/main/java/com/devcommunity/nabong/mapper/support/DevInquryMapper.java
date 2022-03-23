@@ -33,7 +33,7 @@ import java.util.List;
      * @return DevInquryVO - 서버 처리 여부에 해당하는 Status Code 및 Data 반환을 위한 객체
      */
 
-    DevInquryVO devInquryDetail(DevInquryVO devInquryVO);
+    DevInquryVO devInquryDetail(Integer InqurySn);
 
     /**
      * 게시글 수정
