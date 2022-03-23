@@ -34,19 +34,12 @@ import java.util.Map;
     @ResponseBody
     @PostMapping("/devInqury")
     public Map<String, Integer> devInquryPost(@RequestBody DevInquryVO devInquryVO) throws Exception {
-
-//        System.out.println("check>>> getInqryCn: "+devInquryVO.getInqryCn());
-//        System.out.println("check>>> getInqrySj: "+devInquryVO.getInqrySj());
-//        System.out.println("check>>> getSecretAt?: "+devInquryVO.getSecretAt());
-//
-//        System.out.println("check>>> 1맞나?: "+devInquryService.devInquryInsert(devInquryVO));
-//         System.out.println("check>>> auto : "+devInquryService.devInquryInsert(devInquryVO));
-
         return devInquryService.devInquryInsert(devInquryVO);
     }
 
+    //게시글 수정
     @ResponseBody
-    //@PutMapping("/devInqury/{devInqurySn}")
+    @PutMapping("/devInqury/{inqueySn}")
     public Map<String, Integer> devInquryPut(@PathVariable Integer inqueySn, @RequestBody DevInquryVO devInquryVO) throws Exception{
         devInquryVO.setInqrySn(inqueySn);
         System.out.println( "넘어온 params >>>" +devInquryVO);

@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.devcommunity.nabong.mapper.support.DevInquryMapper;
 import com.devcommunity.nabong.model.vo.support.DevInquryVO;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,12 +18,12 @@ import java.util.Map;
  * 개발자 Q&A 관련 비즈니스 Logic 구현체
  * <pre>
  * <b>History:</b>
- *    주니하랑, 1.0.0, 2022.03.10 최초 작성
- *    주니하랑, 1.0.1, 2022.03.10 CRUD 및 조회수 Count 구현 완료
+ *    나봉, 1.0.0, 2022.03.10 최초 작성
+ *    나봉, 1.0.1, 2022.03.10 CRUD 및 조회수 Count 구현 완료
  * </pre>
  *
  * @author 나봉
- * @version 1.0.1, 2022.03.10 CRUD 및 조회수 Count 구현 완료
+ * @version 1.0.1, 2022.03.24 CRUD 및 조회수 Count 구현 완료
  * @See ""
  * @see <a href=""></a>
  */
@@ -114,16 +115,38 @@ import java.util.Map;
      * @param devInquryVO 게시글 등록 시 내용을 담은 Value Object
      * @return
      */
-
     @Override
     public Map<String, Integer> devInquryUpdate(DevInquryVO devInquryVO) {
 
-        log.info("DevInquryService를 구현한 DevInquryServiceImpl의 devInquryUpdate(DevInquryVO devInquryVO)가 호출 되었습니다!");
-        log.info("devInquryMapper.devInquryUpdate(devInquryVO)를 호출 하겠습니다!");
+        Map<String, Integer> result = new HashMap<>();
+        log.info("devInquryVO 값 : " + devInquryVO.toString());
 
-        devInquryMapper.devInquryUpdate(devInquryVO);
+        try {
 
-        return null;
+            //비밀글 확인
+            if (devInquryVO.getSecretAt()==null) {
+                log.info("등록할 글이 비밀글이 아닙니다! 공개글로 등록 합니다!");
+                devInquryVO.setSecretAt("N");
+            } else {
+                log.info("등록할 글이 비밀글 입니다! 비밀글로 등록 합니다!");
+                devInquryVO.setSecretAt("Y");
+            } // if (devInquryVO.getSecretAt().equals("false")) - else 끝
+
+            devInquryMapper.devInquryUpdate(devInquryVO);
+
+            log.info("Map result에 게시글 일련 번호를 넣겠습니다!");
+            result.put("resultSn", devInquryVO.getInqrySn());
+            result.put("code", 200);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            log.warn(e.getMessage());
+            result.put("code", 401);
+
+            return result;
+        } // try - catch 끝
+
+        return result;
     } // devInquryUpdate(DevInquryVO devInquryVO) 끝
 
 
