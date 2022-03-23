@@ -117,12 +117,10 @@ import java.util.Map;
      */
     @Override
     public Map<String, Integer> devInquryUpdate(DevInquryVO devInquryVO) {
-
         Map<String, Integer> result = new HashMap<>();
         log.info("devInquryVO 값 : " + devInquryVO.toString());
 
         try {
-
             //비밀글 확인
             if (devInquryVO.getSecretAt()==null) {
                 log.info("등록할 글이 비밀글이 아닙니다! 공개글로 등록 합니다!");
@@ -154,15 +152,23 @@ import java.util.Map;
      * 게시글 삭제
      * @param devInquryVO 게시글 삭제 시 필요한 내용을 담은 Value Object
      */
-
     @Override
-    public void devInquryDelete(DevInquryVO devInquryVO) {
+    public Map<String, Integer> devInquryDelete(Integer inqurySn) {
+        Map<String, Integer> result = new HashMap<>();
+        try {
+            devInquryMapper.devInquryDelete(inqurySn);
+            result.put("code", 200);
 
-        log.info("DevInquryService를 구현한 DevInquryServiceImpl의 devInquryDelete(DevInquryVO devInquryVO)가 호출 되었습니다!");
-        log.info("devInquryMapper.devInquryDelete(devInquryVO)를 호출 하겠습니다!");
+        } catch (Exception e) {
 
-        devInquryMapper.devInquryDelete(devInquryVO);
+            log.info("게시글 삭제 중 문제가 발생하여 catch문이 실행 되었습니다!");
+            e.printStackTrace();
+            log.warn(e.getMessage());
+            result.put("code", 401);
 
+            return result;
+        } // try - catch 끝
+        return result;
     } // devInquryDelete(DevInquryVO devInquryVO) 끝
 
     /**

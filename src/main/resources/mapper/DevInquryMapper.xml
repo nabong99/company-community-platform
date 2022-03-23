@@ -91,7 +91,7 @@
 
 
     <!--  Q&A 삭제 -->
-    <delete id="devInquryDelete" parameterType="com.devcommunity.nabong.model.vo.support.DevInquryVO">
+    <delete id="devInquryDelete" parameterType="Integer">
         delete from tb_com_inqry
         where inqry_sn = #{inqrySn}
     </delete>

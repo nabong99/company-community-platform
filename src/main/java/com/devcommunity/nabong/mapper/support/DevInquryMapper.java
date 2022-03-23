@@ -47,7 +47,7 @@ import java.util.List;
      * @param devInquryVO 게시글 등록 시 내용을 담은 Value Object
      */
 
-    void devInquryDelete(DevInquryVO devInquryVO);
+    void devInquryDelete(Integer InqurySn);
 
     /**
      * 조회수 Count

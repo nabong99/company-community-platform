@@ -36,10 +36,10 @@ public interface DevInquryService {
 
     /**
      * 게시글 삭제
-     * @param devInquryVO 게시글 삭제 시 내용을 담은 Value Object
+     * @param inqurySn 게시글 삭제 시 내용을 담은 Value Object
      */
 
-    void devInquryDelete(DevInquryVO devInquryVO);
+    Map<String, Integer> devInquryDelete(Integer inqurySn);
 
     /**
      * 조회수 Count
