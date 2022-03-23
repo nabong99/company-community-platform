@@ -23,20 +23,16 @@ import com.devcommunity.nabong.model.vo.support.DevInquryVO;
 public interface DevInquryService {
 
     //게시글 등록
-    void devInquryInsert(DevInquryVO devInquryVO);
-
+    Map<String, Integer> devInquryInsert(DevInquryVO devInquryVO);
+    //게시글 수정
+    Map<String, Integer> devInquryUpdate(DevInquryVO devInquryVO);
+//=========================================================================
 
     //목록조회
     List<HashMap<String, Object>> devInquryList(DevInquryVO devInquryVO);
     //상세조회
     Map<String, DevInquryVO> devInquryDetail(Integer inqurySn);
 
-    /**
-     * 게시글 수정
-     * @param devInquryVO 게시글 수정 시 내용을 담은 Value Object
-     */
-
-    void devInquryUpdate(DevInquryVO devInquryVO);
 
     /**
      * 게시글 삭제

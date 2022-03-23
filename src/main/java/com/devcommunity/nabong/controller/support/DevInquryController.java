@@ -30,6 +30,29 @@ import java.util.Map;
 
     } // DevInquryController(DevInquryService devInquryService, FileService fileService) 끝
 
+    //게시글 등록
+    @ResponseBody
+    @PostMapping("/devInqury")
+    public Map<String, Integer> devInquryPost(@RequestBody DevInquryVO devInquryVO) throws Exception {
+
+//        System.out.println("check>>> getInqryCn: "+devInquryVO.getInqryCn());
+//        System.out.println("check>>> getInqrySj: "+devInquryVO.getInqrySj());
+//        System.out.println("check>>> getSecretAt?: "+devInquryVO.getSecretAt());
+//
+//        System.out.println("check>>> 1맞나?: "+devInquryService.devInquryInsert(devInquryVO));
+//         System.out.println("check>>> auto : "+devInquryService.devInquryInsert(devInquryVO));
+
+        return devInquryService.devInquryInsert(devInquryVO);
+    }
+
+    @ResponseBody
+    //@PutMapping("/devInqury/{devInqurySn}")
+    public Map<String, Integer> devInquryPut(@PathVariable Integer inqueySn, @RequestBody DevInquryVO devInquryVO) throws Exception{
+        devInquryVO.setInqrySn(inqueySn);
+        System.out.println( "넘어온 params >>>" +devInquryVO);
+        return devInquryService.devInquryUpdate(devInquryVO);
+    }
+
     /**
      * 게시글 등록 / 수정 서비스
      * @param devInquryVO - 회원 가입을 위한 이용자 입력값을 담은 DTO
@@ -39,7 +62,7 @@ import java.util.Map;
 
     // TODO - Controller에 있는 비즈니스 로직 ServiceImpl로 옮겨야 하며, 등록 / 수정 분리 작업 필요
 
-    @ResponseBody @PostMapping("/devInqury")
+    //@ResponseBody @PostMapping("/devInqury")
     public Object devInquryRegist(@RequestBody DevInquryVO devInquryVO, HttpServletRequest request) throws Exception {
         Field[] fields = devInquryVO.getClass().getDeclaredFields();
 
@@ -62,15 +85,11 @@ import java.util.Map;
 
             log.info("등록할 글이 비밀글인지 확인 하겠습니다!");
             if (devInquryVO.getSecretAt().equals("false")) {
-
                 log.info("등록할 글이 비밀글이 아닙니다! 공개글로 등록 합니다!");
                 devInquryVO.setSecretAt("N");
-
             } else {
-
                 log.info("등록할 글이 비밀글 입니다! 비밀글로 등록 합니다!");
                 devInquryVO.setSecretAt("Y");
-
             } // if (devInquryVO.getSecretAt().equals("false")) - else 끝
 
             log.info("등록 / 수정 판별을 위해 등록 요청에 게시글 일련번호가 있는지 확인 하겠습니다!");

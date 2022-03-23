@@ -1,6 +1,6 @@
 package com.devcommunity.nabong.service.support;
 
-import com.devcommunity.nabong.model.vo.support.DevGuideVO;
+import com.devcommunity.nabong.common.util.CustomStringUtil;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
@@ -9,7 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import com.devcommunity.nabong.mapper.support.DevInquryMapper;
 import com.devcommunity.nabong.model.vo.support.DevInquryVO;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -22,7 +21,7 @@ import java.util.Map;
  *    주니하랑, 1.0.1, 2022.03.10 CRUD 및 조회수 Count 구현 완료
  * </pre>
  *
- * @author 주니하랑
+ * @author 나봉
  * @version 1.0.1, 2022.03.10 CRUD 및 조회수 Count 구현 완료
  * @See ""
  * @see <a href=""></a>
@@ -37,16 +36,41 @@ import java.util.Map;
     /**
      * 게시글 등록
      * @param devInquryVO 게시글 등록 시 내용을 담은 Value Object
+     * @return
      */
-
     @Override
-    public void devInquryInsert(DevInquryVO devInquryVO) {
+    public Map<String, Integer> devInquryInsert(DevInquryVO devInquryVO) {
+        Map<String, Integer> result = new HashMap<>();
+        try {
 
-        log.info("DevInquryService를 구현한 DevInquryServiceImpl의 devInquryInsert(DevInquryVO devInquryVO)가 호출 되었습니다!");
-        log.info("devInquryMapper.devInquryInsert(devInquryVO)를 호출 하겠습니다!");
+            //비밀글 확인
+            if (devInquryVO.getSecretAt()==null) {
+                log.info("등록할 글이 비밀글이 아닙니다! 공개글로 등록 합니다!");
+                devInquryVO.setSecretAt("N");
+            } else {
+                log.info("등록할 글이 비밀글 입니다! 비밀글로 등록 합니다!");
+                devInquryVO.setSecretAt("Y");
+            } // if (devInquryVO.getSecretAt().equals("false")) - else 끝
 
-        devInquryMapper.devInquryInsert(devInquryVO);
+            // TODO - 회원가입 및 로그인 로직 구현 뒤 아래 하드코딩 수정 필요
+            devInquryVO.setInqryUserSn(4);
 
+            devInquryMapper.devInquryInsert(devInquryVO);
+
+            result.put("resultSn", devInquryVO.getInqrySn());
+            result.put("code", 200);
+        } catch (Exception e) {
+
+            log.info("게시글 등록 / 수정에 문제가 발생(권한 문제)하여 catch문이 실행 되었습니다!");
+            e.printStackTrace();
+            log.warn(e.getMessage());
+            log.info("Logic이 Error로 401 Code를 Map result에 넣겠습니다!");
+            result.put("code", 401);
+
+            return result;
+
+        }
+        return result;
     } // devInquryInsert(DevInquryVO devInquryVO) 끝
 
     /**
@@ -68,7 +92,7 @@ import java.util.Map;
 
     /**
      * 상세 조회
-     * @param devInquryVO 게시글 등록 시 내용을 담은 Value Object
+     * @param inqurySn 게시글 등록 시 내용을 담은 Value Object
      * @return DevInquryVO - 서버 처리 여부에 해당하는 Status Code 및 Data 반환을 위한 객체
      */
 
@@ -88,16 +112,18 @@ import java.util.Map;
     /**
      * 게시글 수정
      * @param devInquryVO 게시글 등록 시 내용을 담은 Value Object
+     * @return
      */
 
     @Override
-    public void devInquryUpdate(DevInquryVO devInquryVO) {
+    public Map<String, Integer> devInquryUpdate(DevInquryVO devInquryVO) {
 
         log.info("DevInquryService를 구현한 DevInquryServiceImpl의 devInquryUpdate(DevInquryVO devInquryVO)가 호출 되었습니다!");
         log.info("devInquryMapper.devInquryUpdate(devInquryVO)를 호출 하겠습니다!");
 
         devInquryMapper.devInquryUpdate(devInquryVO);
 
+        return null;
     } // devInquryUpdate(DevInquryVO devInquryVO) 끝
 
 

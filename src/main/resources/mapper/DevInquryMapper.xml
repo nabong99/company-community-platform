@@ -18,7 +18,7 @@
             INQRY_USER_SN
         ) VALUES (
          #{inqrySj},
-         #{inqryCn}
+         #{inqryCn},
          #{fileSn},
          NOW(),
          #{crtrSn},
