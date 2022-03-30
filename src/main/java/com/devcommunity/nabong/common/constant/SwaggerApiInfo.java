@@ -4,11 +4,11 @@ package com.devcommunity.nabong.common.constant;
  * Service별 Swagger내용 관련 인터페이스
  * <pre>
  * <b>History:</b>
- *    주니하랑, 1.0.0, 2022.02.08 최초 작성
- *    주니하랑, 1.0.1, 2022.02.28 검색 기능 구현을 위해 변수 추가
+ *    나봉, 1.0.0, 2022.02.08 최초 작성
+ *    나봉, 1.0.1, 2022.02.28 검색 기능 구현을 위해 변수 추가
  * </pre>
  *
- * @author 주니하랑
+ * @author 나봉
  * @version 1.0.1, 2022.02.28 검색 기능 구현을 위해 변수 추가
  * @See ""
  * @see <a href=""></a>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.devcommunity.nabong.api.user.mapper.UserMapper">
+
+    <insert id="userJoin" parameterType="com.devcommunity.nabong.api.user.vo.UserVO">
+        <![CDATA[
+        INSERT INTO tb_user (
+            USER_ID,
+            USER_PASSWORD,
+            USER_NM,
+            PSITN_INSTT_AUTHOR_CODE,
+            EMAIL_ADRES,
+            USER_MBTLNUM,
+            USER_GROUP_CODE,
+            LOGIN_FAILR_CO,
+            PASSWORD_CHANGE_DT,
+            CREAT_DT,
+            CRTR_ID
+        ) VALUES (
+                     #{userId},
+                     #{userPassword},
+                     #{userNm},
+                     '6',
+                     #{emailAdres},
+                     #{userMbtlnum},
+                     #{userGroupCode},
+                     0,
+                     now(),
+                     now(),
+                  'tb_user_group'
+                 )
+        ]]>
+    </insert>
+
+</mapper>

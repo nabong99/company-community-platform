@@ -48,23 +48,27 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>
         </dependency>
-        <!-- TODO 의존 추가 시 "Will not secure any request" 즉, 필터에서 뱉어냄. -->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.boot</groupId>-->
-        <!--            <artifactId>spring-boot-starter-security</artifactId>-->
-        <!--        </dependency>-->
-        <!--        <dependency>-->
-        <!--            <groupId>org.springframework.security</groupId>-->
-        <!--            <artifactId>spring-security-test</artifactId>-->
-        <!--            <scope>test</scope>-->
-        <!--        </dependency>-->
+<!--         TODO 의존 추가 시 "Will not secure any request" 즉, 필터에서 뱉어냄. -->
+                <dependency>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-security</artifactId>
+                </dependency>
+                <dependency>
+                    <groupId>org.springframework.security</groupId>
+                    <artifactId>spring-security-test</artifactId>
+                    <scope>test</scope>
+                </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-devtools</artifactId>
             <scope>runtime</scope>
             <optional>true</optional>
         </dependency>
-
+        <!--    JPA    -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-jpa</artifactId>
+        </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>

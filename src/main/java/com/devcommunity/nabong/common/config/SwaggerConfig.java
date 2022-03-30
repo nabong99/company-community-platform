@@ -15,10 +15,10 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
  * API 문서 관리 Swagger 설정
  * <pre>
  * <b>History:</b>
- *    주니하랑, 1.0.0, 2022.03.09 최초 작성
+ *    나봉, 1.0.0, 2022.03.09 최초 작성
  * </pre>
  *
- * @author 주니하랑
+ * @author 나봉
  * @version 1.0.0, 2022.03.09 최초 작성
  * @See ""
  * @see <a href=""></a>
@@ -42,7 +42,7 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
                 .title("이/홍가 Community Project API Document")
                 .version("1.0.0")
                 .description(
-                        "<h1> 주니하랑 개인 프로젝트!! </h1> "
+                        "<h1> 나봉 개인 프로젝트!! </h1> "
                 ).build();
 
     } // apiInfo() 끝
