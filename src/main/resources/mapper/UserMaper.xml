@@ -32,4 +32,14 @@
         ]]>
     </insert>
 
+    <select id="getUserById" parameterType="String" resultType="com.devcommunity.nabong.api.user.vo.UserVO">
+        /* getUserById : 회원 로그인 */
+        select *
+        from tb_user
+        where 1 = 1
+        AND
+        <if test=' userId neq null and userId neq "" '>
+        USER_ID = #{userId}
+        </if>
+    </select>
 </mapper>

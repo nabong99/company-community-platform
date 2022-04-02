@@ -1,12 +1,21 @@
 package com.devcommunity.nabong.api.user.web;
 
+import com.devcommunity.nabong.api.user.auth.PrincipalDetails;
+import com.devcommunity.nabong.api.user.auth.PrincipalDetailsService;
 import com.devcommunity.nabong.api.user.service.UserService;
 import com.devcommunity.nabong.api.user.vo.UserVO;
 import com.devcommunity.nabong.common.constant.ServiceURIMng;
-import com.devcommunity.nabong.service.support.DevInquryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -23,20 +32,47 @@ public class UserController {
     private BCryptPasswordEncoder bCryptPasswordEncoder;
 
     @Autowired
+    private PasswordEncoder passwordEncoder;
+
+    @Autowired
+    PrincipalDetailsService principalDetailsService;
+
+    @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
 
     }
 
     //로그인
-    @PostMapping("/login")
-    public @ResponseBody Object login() throws Exception {
+    @PostMapping(value = "/login")
+    public @ResponseBody Map<String, String> login(@RequestBody UserVO userVO) throws Exception {
+        System.out.println(userVO);
+        PrincipalDetails principalUser = (PrincipalDetails) principalDetailsService.loadUserByUsername(userVO.getUserId());
+        Map<String, String> result = new HashMap<>();
 
-        Map<String, Object> result = new HashMap<>();
-        System.out.println("login 페이지 들어옴...");
+        System.out.println("principalUser 권한보기>>"+principalUser);
+        System.out.println("principalUser 권한보기>>"+principalUser.getAuthorities());
+        System.out.println("getAuthorities()>>"+principalUser.getUsername());
+        //id가 있을경우
+        if(principalUser != null) {
 
+            System.out.println("principalUser.getPassword()>>"+principalUser.getPassword());
+            System.out.println("userVO.getUserPassword()>>"+userVO.getUserPassword());
+
+            //비밀번호 일치
+            if (passwordEncoder.matches(userVO.getUserPassword(), principalUser.getPassword())) {
+                result.put("result", "200");
+            }
+            //비밀번호 불일치
+            else {
+                result.put("result", "worng_password");
+            }
+        }
+        //아이디 없을경우
+        else{
+            result.put("result", "no_id");
+        }
         return result;
-
     }
 
     //회원가입

@@ -9,8 +9,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import java.sql.Timestamp;
 
-@Entity //JPA가 관리한다!
-@Data
+//@Entity //JPA가 관리한다!
+//@Data
 public class NbUser {
     @Id // primary key
     @GeneratedValue(strategy = GenerationType.IDENTITY)

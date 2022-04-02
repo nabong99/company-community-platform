@@ -15,6 +15,15 @@ public class UserServiceImpl implements UserService {
 
     private final UserMapper userMapper;
 
+    //로그인 시 아이디 비교
+    @Override
+    public UserVO getUserById(String userId) {
+
+        UserVO userVO = userMapper.getUserById(userId);
+        return userVO;
+    }
+
+    //회원가입
     @Override
     public Map<String, Integer> userInsert(UserVO userVO) {
         Map<String, Integer> result = new HashMap<>();
